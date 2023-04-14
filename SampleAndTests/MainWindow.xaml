@@ -1,0 +1,40 @@
+﻿<Window x:Class="SampleAndTests.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SampleAndTests"
+        xmlns:lwct="clr-namespace:lscyane.Wpf.Control;assembly=lscyane.Wpf"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid Margin="5">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <lwct:Border3D Mode="Concave" BorderThickness="5" Grid.Row="0" Grid.Column="0" Margin="5">
+            <TextBlock Text="Concave"/>
+        </lwct:Border3D>
+
+        <lwct:Border3D Mode="Convex" BorderThickness="5" Grid.Row="0" Grid.Column="1" Margin="5">
+            <TextBlock Text="Convex"/>
+        </lwct:Border3D>
+
+        <lwct:Border3D Mode="Concave" BorderThickness="5" Grid.Row="1" Grid.Column="0" Margin="5">
+            <lwct:Border3D Mode="Convex" BorderThickness="5" Margin="5">
+                <TextBlock Text="Valley"/>
+            </lwct:Border3D>
+        </lwct:Border3D>
+
+        <lwct:Border3D Mode="Convex" BorderThickness="5" Grid.Row="1" Grid.Column="1" Margin="5">
+            <lwct:Border3D Mode="Concave" BorderThickness="5" Margin="5">
+                <TextBlock Text="Wall"/>
+            </lwct:Border3D>
+        </lwct:Border3D>
+    </Grid>
+</Window>
