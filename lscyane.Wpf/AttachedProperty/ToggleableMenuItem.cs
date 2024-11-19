@@ -58,7 +58,7 @@ namespace lscyane.Wpf.AttachedProperty
                             // 古いグループ マッピングを削除する
                             RemoveCheckboxFromGrouping(menuItem);
                         }
-                        ElementToGroupNames.Add(menuItem, e.NewValue.ToString());
+                        ElementToGroupNames.Add(menuItem, e.NewValue.ToString() ?? string.Empty);
                         menuItem.Checked += MenuItemChecked;
                     }
                 }
