@@ -27,7 +27,7 @@ namespace lscyane.Wpf.Extention
 
 
         // 実際に実行するコマンドの参照
-        private ICommand _targetCommand;
+        private ICommand? _targetCommand;
 
 
         /// <summary>
@@ -73,15 +73,21 @@ namespace lscyane.Wpf.Extention
                     var target = pvt.TargetObject as FrameworkElement;
 
                     // DataContextを基準にコマンドを取得
-                    this._targetCommand = (ICommand)ParsePropertyPath(target.DataContext, this.BindingCommandPath);
+                    this._targetCommand = ParsePropertyPath(target?.DataContext, this.BindingCommandPath) as ICommand;
 
                     // PrivateHandlerGeneric<T> を反射で呼び出す準備
                     var nonGenericMethod = GetType().GetMethod("PrivateHandlerGeneric", BindingFlags.NonPublic | BindingFlags.Instance);
-                    var argType = type.GetMethod("Invoke").GetParameters()[1].ParameterType;
-                    var genericMethod = nonGenericMethod.MakeGenericMethod(argType);
+                    var argType = type.GetMethod("Invoke")?.GetParameters()[1].ParameterType;
 
-                    // イベントに対応するデリゲートを生成して返す
-                    return Delegate.CreateDelegate(type, this, genericMethod); ;
+                    if (argType != null)
+                    {
+                        var genericMethod = nonGenericMethod?.MakeGenericMethod(argType);
+                        if (genericMethod != null)
+                        {
+                            // イベントに対応するデリゲートを生成して返す
+                            return Delegate.CreateDelegate(type, this, genericMethod);
+                        }
+                    }
                 }
 
             }
