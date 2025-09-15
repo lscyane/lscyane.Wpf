@@ -1,0 +1,3 @@
+[submodule "lscyane.Core"]
+	path = lscyane.Core
+	url = https://github.com/lscyane/lscyane.Core.git
