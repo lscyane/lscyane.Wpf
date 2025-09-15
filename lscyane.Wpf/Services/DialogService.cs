@@ -89,8 +89,7 @@ public class DialogService : IDialogService
         var dialog = DialogDefinitions.FirstOrDefault(kvp => kvp.Value == vm_type);
         if ((dialog.Value == null)
          || (dialog.Key == null)
-        )
-        {
+        ) {
             throw new InvalidOperationException($"Dialog with name '{vm_type}' is not registered.");
         }
 
@@ -110,6 +109,12 @@ public class DialogService : IDialogService
         {
             d_view.Owner = this.Owner;
         }
+
+        // VMからのClose要求
+        d_viewmodel.RequestClose += () =>
+        {
+            d_view.Close();
+        };
 
         // ダイアログ表示前の処理
         d_viewmodel.OnDialogPreviewOpen(parameter);
