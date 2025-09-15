@@ -14,13 +14,10 @@ public class DialogService : IDialogService
 {
     public static DialogService? Main { get; set; } = null;
 
-
+    /// <summary> オーナーウインドウのインスタンス </summary>
     Window Owner;
 
-
-    /// <summary>
-    /// 登録されたダイアログの管理。Key=View, Value=ViewModel
-    /// </summary>
+    /// <summary> 登録されたダイアログの管理。Key=View, Value=ViewModel </summary>
     Dictionary<Type,Type> DialogDefinitions = new Dictionary<Type, Type>();
 
 
@@ -46,7 +43,7 @@ public class DialogService : IDialogService
 
 
     /// <summary>
-    /// ダイアログの表示
+    /// ダイアログをモードレスで表示します
     /// </summary>
     /// <param name="vm_type"></param>
     /// <param name="parameter"></param>
@@ -54,11 +51,46 @@ public class DialogService : IDialogService
     /// <exception cref="InvalidOperationException"></exception>
     public void Show(Type vm_type, DialogParameters? parameter = null, Action<object>? result_action = null)
     {
+        // ダイアログのインスタンスを取得と共通前処理
+        var d_view = GetDialogViewWithPreProcess(vm_type);
+
+        // ダイアログを表示
+        d_view.Show();
+
+        // 結果を処理
+        result_action?.Invoke(new object());
+    }
+
+
+    /// <summary>
+    /// ダイアログをモーダルで表示します
+    /// </summary>
+    /// <param name="vm_type"></param>
+    /// <param name="parameter"></param>
+    /// <param name="result_action"></param>
+    /// <exception cref="InvalidOperationException"></exception>
+    public void ShowDialog(Type vm_type, DialogParameters? parameter = null, Action<object>? result_action = null)
+    {
+        // ダイアログのインスタンスを取得と共通前処理
+        var d_view = GetDialogViewWithPreProcess(vm_type);
+
+        // ダイアログを表示
+        var result = d_view.ShowDialog();
+
+        // 結果を処理
+        result_action?.Invoke(result ?? new object());
+    }
+
+
+    /// <summary> ダイアログのインスタンスを取得と共通前処理 <param name="vm_type"></param>
+    private Window GetDialogViewWithPreProcess(Type vm_type, DialogParameters? parameter = null)
+    {
         // name に対応する ViewModel を探す
         var dialog = DialogDefinitions.FirstOrDefault(kvp => kvp.Value == vm_type);
         if ((dialog.Value == null)
          || (dialog.Key == null)
-        ) {
+        )
+        {
             throw new InvalidOperationException($"Dialog with name '{vm_type}' is not registered.");
         }
 
@@ -79,12 +111,10 @@ public class DialogService : IDialogService
             d_view.Owner = this.Owner;
         }
 
+        // ダイアログ表示前の処理
         d_viewmodel.OnDialogPreviewOpen(parameter);
 
-        // ダイアログを表示
-        d_view.Show();
-
-        // 結果を処理
-        result_action?.Invoke(new object());
+        return d_view;
     }
+
 }
