@@ -52,7 +52,7 @@ public class DialogService : IDialogService
     public void Show(Type vm_type, DialogParameters? parameter = null, Action<object>? result_action = null)
     {
         // ダイアログのインスタンスを取得と共通前処理
-        var d_view = GetDialogViewWithPreProcess(vm_type);
+        var d_view = GetDialogViewWithPreProcess(vm_type, parameter);
 
         // ダイアログを表示
         d_view.Show();
@@ -72,7 +72,7 @@ public class DialogService : IDialogService
     public void ShowDialog(Type vm_type, DialogParameters? parameter = null, Action<object>? result_action = null)
     {
         // ダイアログのインスタンスを取得と共通前処理
-        var d_view = GetDialogViewWithPreProcess(vm_type);
+        var d_view = GetDialogViewWithPreProcess(vm_type, parameter);
 
         // ダイアログを表示
         var result = d_view.ShowDialog();
