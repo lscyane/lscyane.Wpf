@@ -26,14 +26,16 @@
                                 <RowDefinition/>
                                 <RowDefinition/>
                             </Grid.RowDefinitions>
-                            <Button Grid.Row="0" x:Name="PART_UpButton" Padding="0" Margin="0" Width="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
+                            <Button Grid.Row="0" x:Name="PART_UpButton" Padding="0" Margin="0" Width="20" MinWidth="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                                    BorderThickness="0,1,1,1">
                                 <Viewbox Margin="1">
-                                    <Path Data="M0,9 L6,0 L12,9 Z" Stretch="Uniform" Fill="Black"/>
+                                    <Path Data="M0,9 L6,0 L12,9 Z" Stretch="Uniform" Fill="Black" Margin="2"/>
                                 </Viewbox>
                             </Button>
-                            <Button Grid.Row="1" x:Name="PART_DownButton" Padding="0" Margin="0" Width="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
+                            <Button Grid.Row="1" x:Name="PART_DownButton" Padding="0" Margin="0" Width="20" MinWidth="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                                    BorderThickness="0,0,1,1">
                                 <Viewbox Margin="1">
-                                    <Path Data="M0,0 L6,9 L12,0 Z" Stretch="Uniform" Fill="Black"/>
+                                    <Path Data="M0,0 L6,9 L12,0 Z" Stretch="Uniform" Fill="Black" Margin="2"/>
                                 </Viewbox>
                             </Button>
                         </Grid>
