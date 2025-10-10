@@ -49,7 +49,7 @@ public class DialogService : IDialogService
     /// <param name="parameter"></param>
     /// <param name="result_action"></param>
     /// <exception cref="InvalidOperationException"></exception>
-    public void Show(Type vm_type, DialogParameters? parameter = null, Action<object>? result_action = null)
+    public void Show(Type vm_type, DialogParameters? parameter = null, Action<bool,object>? result_action = null)
     {
         // ダイアログのインスタンスを取得と共通前処理
         var d_view = GetDialogViewWithPreProcess(vm_type, parameter);
@@ -58,7 +58,7 @@ public class DialogService : IDialogService
         d_view.Show();
 
         // 結果を処理
-        result_action?.Invoke(new object());
+        result_action?.Invoke(d_view.DialogResult ?? false, d_view.Tag ?? new object());
     }
 
 
@@ -69,7 +69,7 @@ public class DialogService : IDialogService
     /// <param name="parameter"></param>
     /// <param name="result_action"></param>
     /// <exception cref="InvalidOperationException"></exception>
-    public void ShowDialog(Type vm_type, DialogParameters? parameter = null, Action<object>? result_action = null)
+    public void ShowDialog(Type vm_type, DialogParameters? parameter = null, Action<bool,object>? result_action = null)
     {
         // ダイアログのインスタンスを取得と共通前処理
         var d_view = GetDialogViewWithPreProcess(vm_type, parameter);
@@ -78,7 +78,7 @@ public class DialogService : IDialogService
         var result = d_view.ShowDialog();
 
         // 結果を処理
-        result_action?.Invoke(result ?? new object());
+        result_action?.Invoke(d_view.DialogResult ?? false, d_view.Tag ?? new object());
     }
 
 
@@ -111,8 +111,10 @@ public class DialogService : IDialogService
         }
 
         // VMからのClose要求
-        d_viewmodel.RequestClose += () =>
+        d_viewmodel.RequestClose += (result, args) =>
         {
+            d_view.DialogResult = result;
+            d_view.Tag = args;
             d_view.Close();
         };
 
