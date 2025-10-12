@@ -98,11 +98,16 @@ public class DialogService : IDialogService
         {
             throw new InvalidOperationException($"Failed to create dialog of type '{dialog.Key.FullName}'.");
         }
-        if (Activator.CreateInstance(dialog.Value) is not DialogViewModelBase d_viewmodel)
+        if (d_view.DataContext is not DialogViewModelBase d_viewmodel)
         {
-            throw new InvalidOperationException($"Failed to create dialog of type '{dialog.Value.FullName}'.");
+            // VMのインスタンス及びDataContextは View のコンストラクタで作られなければここで作る (InvokeCommandの関係でInitializeComponentの前にDataContextを設定しないといけないなど)
+            if (Activator.CreateInstance(dialog.Value) is not DialogViewModelBase new_vm)
+            {
+                throw new InvalidOperationException($"Failed to create dialog of type '{dialog.Value.FullName}'.");
+            }
+            d_view.DataContext = new_vm;
+            d_viewmodel = new_vm;
         }
-        d_view.DataContext = d_viewmodel;
 
         // ダイアログのオーナーを設定
         if (this.Owner.IsLoaded)
