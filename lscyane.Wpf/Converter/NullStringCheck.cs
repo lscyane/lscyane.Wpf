@@ -12,26 +12,54 @@ namespace lscyane.Wpf.Converter
     public class NullStringCheck : IValueConverter
     {
         private bool invert;
+        private Visibility? visibility;
 
 
-        public NullStringCheck(bool inv = false)
+        public NullStringCheck(bool inv = false, Visibility? visible = null)
         {
             this.invert = inv;
+            this.visibility = visible;
         }
 
 
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            bool retval = false;
             string val = (string)value;
-            if ((val != null) && (val != ""))
+
+            if (this.visibility == null)
             {
-                retval = true;
+                bool retval = false;
+                if ((val != null) && (val != ""))
+                {
+                    retval = true;
+                }
+
+                retval = (retval != this.invert);
+
+                return retval;
             }
+            else
+            {
+                Visibility vretval =  this.visibility.Value;
+                if ((val != null) && (val != ""))
+                {
+                    vretval = Visibility.Visible;
+                }
 
-            retval = (retval != this.invert);
+                if (this.invert)
+                {
+                    if (vretval == Visibility.Visible)
+                    {
+                        vretval = this.visibility.Value;
+                    }
+                    else
+                    {
+                        vretval = Visibility.Visible;
+                    }
+                }
 
-            return retval;
+                return vretval;
+            }
         }
 
 
@@ -42,8 +70,12 @@ namespace lscyane.Wpf.Converter
 
 
         #region 値コンバーターの実体
-        public static NullStringCheck Converter = new NullStringCheck();
-        public static NullStringCheck InvConverter = new NullStringCheck(true);
+        public static NullStringCheck Converter = new NullStringCheck();        // null -> false
+        public static NullStringCheck InvConverter = new NullStringCheck(true); // null -> true
+        public static NullStringCheck HiddenConverter = new NullStringCheck(false, Visibility.Hidden);  // null -> Hidden
+        public static NullStringCheck HiddenInvConverter = new NullStringCheck(true, Visibility.Hidden);   // null -> Visible
+        public static NullStringCheck CollapsedConverter = new NullStringCheck(false, Visibility.Collapsed);  // null -> Collapsed
+        public static NullStringCheck CollapsedInvConverter = new NullStringCheck(true, Visibility.Collapsed);   // null -> Visible
         #endregion
     }
 }
