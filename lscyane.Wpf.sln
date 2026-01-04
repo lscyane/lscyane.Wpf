@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.4.33213.308
+# Visual Studio Version 18
+VisualStudioVersion = 18.1.11312.151 d18.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "lscyane.Wpf", "lscyane.Wpf\lscyane.Wpf.csproj", "{A883B780-B531-4EBF-926C-D36CA6455280}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleAndTests", "SampleAndTests\SampleAndTests.csproj", "{D24CEB46-692F-4B78-B47F-2C501FF60E2B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "lscyane.Core", "lscyane.Core\lscyane.Core\lscyane.Core.csproj", "{F8E3E839-2321-F112-907A-86280B68CFF1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{D24CEB46-692F-4B78-B47F-2C501FF60E2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D24CEB46-692F-4B78-B47F-2C501FF60E2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D24CEB46-692F-4B78-B47F-2C501FF60E2B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F8E3E839-2321-F112-907A-86280B68CFF1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F8E3E839-2321-F112-907A-86280B68CFF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F8E3E839-2321-F112-907A-86280B68CFF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F8E3E839-2321-F112-907A-86280B68CFF1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
