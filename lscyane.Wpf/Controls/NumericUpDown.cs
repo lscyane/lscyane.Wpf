@@ -29,7 +29,14 @@ public class NumericUpDown : System.Windows.Controls.Control
         DependencyProperty.Register("Value",
             typeof(decimal),
             typeof(NumericUpDown),
-            new FrameworkPropertyMetadata(0m, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+            new FrameworkPropertyMetadata(0m, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, null, CoerceValue));
+
+    private static object CoerceValue(DependencyObject d, object baseValue)
+    {
+        var control = (NumericUpDown)d;
+        var value = (decimal)baseValue;
+        return Math.Clamp(value, control.MinValue, control.MaxValue);
+    }
 
 
     /// <summary>
@@ -61,7 +68,7 @@ public class NumericUpDown : System.Windows.Controls.Control
         DependencyProperty.Register("MaxValue",
             typeof(decimal),
             typeof(NumericUpDown),
-            new FrameworkPropertyMetadata(decimal.MaxValue));
+            new FrameworkPropertyMetadata(decimal.MaxValue, (d, _) => ((NumericUpDown)d).CoerceValue(ValueProperty)));
 
 
     /// <summary>
@@ -77,7 +84,7 @@ public class NumericUpDown : System.Windows.Controls.Control
         DependencyProperty.Register("MinValue",
             typeof(decimal),
             typeof(NumericUpDown),
-            new FrameworkPropertyMetadata(decimal.MinValue));
+            new FrameworkPropertyMetadata(decimal.MinValue, (d, _) => ((NumericUpDown)d).CoerceValue(ValueProperty)));
 
 
     /// <inheritdoc/>
