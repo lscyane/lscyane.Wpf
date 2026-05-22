@@ -10,6 +10,8 @@ namespace lscyane.Wpf.Controls;
 /// </summary>
 public class NumericUpDown : System.Windows.Controls.Control
 {
+    private TextBox? _textBox;
+
     static NumericUpDown()
     {
         DefaultStyleKeyProperty.OverrideMetadata(typeof(NumericUpDown), new FrameworkPropertyMetadata(typeof(NumericUpDown)));
@@ -87,10 +89,39 @@ public class NumericUpDown : System.Windows.Controls.Control
             new FrameworkPropertyMetadata(decimal.MinValue, (d, _) => ((NumericUpDown)d).CoerceValue(ValueProperty)));
 
 
+    /// <summary>
+    /// 内部テキストボックスの最大入力文字数
+    /// </summary>
+    public int MaxLength
+    {
+        get { return (int)GetValue(MaxLengthProperty); }
+        set { SetValue(MaxLengthProperty, value); }
+    }
+    /// <summary>依存プロパティ定義</summary>
+    public static readonly DependencyProperty MaxLengthProperty =
+        DependencyProperty.Register("MaxLength",
+            typeof(int),
+            typeof(NumericUpDown),
+            new FrameworkPropertyMetadata(0, OnMaxLengthChanged));
+
+    private static void OnMaxLengthChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    {
+        var control = (NumericUpDown)d;
+        if (control._textBox is not null)
+            control._textBox.MaxLength = (int)e.NewValue;
+    }
+
+
     /// <inheritdoc/>
     public override void OnApplyTemplate()
     {
         base.OnApplyTemplate();
+
+        if (GetTemplateChild("PART_TextBox") is TextBox tb)
+        {
+            _textBox = tb;
+            _textBox.MaxLength = this.MaxLength;
+        }
 
         if (GetTemplateChild("PART_UpButton") is Button upBtn)
         {
