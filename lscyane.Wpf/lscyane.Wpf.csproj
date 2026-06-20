@@ -4,6 +4,20 @@
     <TargetFramework>net10.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
+    <PackageId>lscyane.Wpf</PackageId>
+    <Authors>lscyane</Authors>
+    <Company>Tea Sound Project</Company>
+    <CompanyShortName>TSP</CompanyShortName>
+    <Copyright>(C) 2026 lscyane</Copyright>
+    <Description>Utility library for lscyane projects</Description>
+    <RepositoryUrl>https://github.com/lscyane/lscyane.Wpf</RepositoryUrl>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression> 
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <VersionPrefix>0.0.1</VersionPrefix>
+    <VersionSuffix></VersionSuffix>
+    <BuildNumber>1</BuildNumber>
   </PropertyGroup>
 
   <ItemGroup>
